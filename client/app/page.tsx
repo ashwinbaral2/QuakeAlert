@@ -1,9 +1,17 @@
-import Image from "next/image";
+"use client"
+import dynamic from "next/dynamic";
 
-export default function Home() {
+const EarthquakeMap = dynamic(() => import("../components/maps/page"), {
+  ssr: false,
+});
+
+export default function MapsPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      earthquake program test
-    </div>
+    <main style={{ padding: "16px" }}>
+      <h1 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "12px" }}>
+        QuakeAlert
+      </h1>
+      <EarthquakeMap />
+    </main>
   );
 }
