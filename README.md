@@ -31,6 +31,57 @@ QuakeAlert is a web app that provides real-time earthquake tracking with interac
 5. **Alerts & Notifications:** System can trigger notifications for significant events, sending alerts to subscribed users or systems.
 6. **Data Updates:** The backend regularly polls data sources to keep the dashboard up to date.
 
+## 🚀 Features (v0.1.0)
+
+### 1. Real-Time Earthquake Feed
+- Fetches **live earthquake data** from USGS or other seismic APIs.
+- Displays **magnitude, epicenter coordinates, depth, and time**.
+- Shows earthquakes in a **list or card view**.
+
+### 2. Interactive Map Visualization
+- Uses **Leaflet + OpenStreetMap** for mapping.
+- Plots earthquake markers using **circle-dot icons**.
+- Marker **size and color scale with magnitude**.
+- Epicenters are easy to identify visually.
+
+### 3. Floating “Report Earthquake” Button
+- **Sticky button** always visible on the page.
+- Opens a **modal form** for users to submit:
+  - Location
+  - Magnitude (optional)
+  - Description of what they felt
+
+### 4. User-Submitted Reports
+- Stores submissions in **MongoDB**.
+- Displays user reports on the map or as a list.
+- Allows community-based verification of earthquakes.
+
+### 5. Basic Responsive UI
+- Works on **desktop and mobile**.
+- Clean and minimal **cards for earthquake details**.
+- Floating button remains accessible on all screen sizes.
+
+### 6. Basic Filtering & Sorting
+- Sort earthquakes by **magnitude** or **time**.
+- Optional filtering by **region** using coordinates.
+
+---
+
+## 🔹 Optional features... ( for v0.2.0)
+- Animated **epicenter pulses** for new quakes.
+- Magnitude-scaled markers for better visualization.
+- Display **distance from user location** if permission is granted.
+
+---
+
+## ❌ Features Reserved for Future Versions
+- AI-based aftershock prediction
+- Customizable push notifications
+- Heatmaps or tectonic plate overlays
+- Historical analytics dashboards
+- Multi-language support
+
+---
 ## Tech Stack
 
 * Node.js + Express (backend)
