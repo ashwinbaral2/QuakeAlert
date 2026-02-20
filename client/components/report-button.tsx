@@ -32,8 +32,8 @@ export default function ReportButton() {
         <DialogHeader>
           <DialogTitle>Report an Earthquake</DialogTitle>
           <DialogDescription>
-            Share details about the earthquake you felt. Your submission will help
-            others stay informed.
+            Share details about the earthquake you felt. Your submission will
+            help others stay informed.
           </DialogDescription>
         </DialogHeader>
 
@@ -79,7 +79,10 @@ export default function ReportButton() {
           </div>
 
           <DialogFooter>
-            <Button type="submit" className="bg-red-600 hover:bg-red-700 text-white">
+            <Button
+              type="submit"
+              className="bg-red-600 hover:bg-red-700 text-white"
+            >
               Submit
             </Button>
             <DialogClose asChild>
