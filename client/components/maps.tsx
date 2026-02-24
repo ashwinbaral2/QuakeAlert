@@ -3,6 +3,7 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { LatLngExpression } from "leaflet";
 import L from "leaflet";
+import { SearchBar } from "./searchbar";
 
 // custom icon
 function QuakeIcon(mag: number) {
@@ -21,13 +22,16 @@ function QuakeIcon(mag: number) {
 export default function EarthquakeMap() {
     const gorkha: LatLngExpression = [28.147, 84.708];
     return (
-        <div className="w-full h-[60vh] mt-5">
+        <div className="w-full h-screen mt-5 absolute top-0 left-0">
+            
             <MapContainer
                 center={gorkha}
                 zoom={7}
                 scrollWheelZoom={true}
                 style={{ height: "100%", width: "100%" }}
+                className="top-0 z-10"
             >
+                <SearchBar/>
                 <TileLayer
                     url="https://api.maptiler.com/maps/streets-v4/{z}/{x}/{y}.png?key=mlULvqRUGxA5YTVzhzdS"
                 />

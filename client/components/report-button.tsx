@@ -12,25 +12,27 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
-import { SquareActivity } from "lucide-react";
+import { ActivityIcon, SquareActivity } from "lucide-react";
 
 export default function ReportButton() {
   return (
     <Dialog>
       {/* Floating button */}
       <DialogTrigger asChild>
+        {/* Floating emergency button: sits above main content */}
         <Button
-          className="fixed bottom-6 right-6 z-500 bg-gray-100 hover:bg-red-700 w-fit h-fit text-red-700 hover:text-gray-100 p-5  shadow-2xl rounded-full"
+          className="fixed bottom-20 right-6 z-20 bg-slate-200 hover:bg-red-700 w-fit h-fit text-red-700 hover:text-gray-100 p-5 shadow-2xl rounded-full"
           size="icon"
         >
-          <SquareActivity /> Report an Earthquake
+        Report an Earthquake <SquareActivity className="ml-2 h-4 w-4" />
         </Button>
       </DialogTrigger>
 
       {/* Modal / Form */}
-      <DialogContent className="sm:max-w-lg z-500">
+      {/* Dialog: use modal z-scale level (z-400) so modals stay above sidebar/footer */}
+      <DialogContent className="sm:max-w-lg z-400">
         <DialogHeader>
-          <DialogTitle>Report an Earthquake</DialogTitle>
+          <DialogTitle>Report an Earthquake </DialogTitle>
           <DialogDescription>
             Share details about the earthquake you felt. Your submission will
             help others stay informed.
