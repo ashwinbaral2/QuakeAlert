@@ -1,4 +1,5 @@
-import Earthquake from "../models/eq.js";
+import Earthquake from "../models/earthquake.js";
+import { syncEarthquakes } from "../services/earthquake.js";
 
 const createEarthquake = async (req, res) => {
   try {
@@ -27,6 +28,15 @@ const getEarthquakeById = async (req, res) => {
     res.send(earthquake);
   } catch (error) {
     res.status(500).send("Error fetching earthquake: " + error.message);
+  }
+};
+const syncHandler = async (req, res) => {
+  try{
+    await syncEarthquakes();
+    res.json({message:"Earthquake sync completed"}
+    )
+  } catch (error){
+    res.status(500).json({error: error.message})
   }
 };
 const editEarthquakeById = async (req, res) => {
@@ -59,6 +69,7 @@ export {
   createEarthquake,
   getEarthquakes,
   getEarthquakeById,
+  syncHandler,
   editEarthquakeById,
   deleteEarthquakeById,
 };
