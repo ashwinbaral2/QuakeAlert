@@ -35,16 +35,21 @@ export default function Header() {
 						className="hidden sm:flex items-center gap-6"
 					>
 						<Link href="/dashboard" className={navLinkStyle}>
+							Dashboard
+              <span className="absolute left-0 -bottom-0.5 h-[1.5px] w-0 bg-red-700 transition-all duration-300 group-hover:w-full" />
+						</Link>
+
+						<Link href="/live-map" className={navLinkStyle}>
 							Live Map
               <span className="absolute left-0 -bottom-0.5 h-[1.5px] w-0 bg-red-700 transition-all duration-300 group-hover:w-full" />
 						</Link>
 
-						<Link href="/latest" className={navLinkStyle}>
+						<Link href="/latest-quake" className={navLinkStyle}>
 							Latest Quake 
               <span className="absolute left-0 -bottom-0.5 h-[1.5px] w-0 bg-red-700 transition-all duration-300 group-hover:w-full" />
 						</Link>
 
-						<Link href="/about" className={navLinkStyle}>
+						<Link href="/quakefeed" className={navLinkStyle}>
 							Quake Feed
               <span className="absolute left-0 -bottom-0.5 h-[1.5px] w-0 bg-red-700 transition-all duration-300 group-hover:w-full" />
 						</Link>
