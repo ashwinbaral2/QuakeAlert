@@ -2,9 +2,10 @@ import mongoose, { Schema } from "mongoose";
 
 const EarthquakeSchema = new Schema(
     {
-        eventId: { type: String, required: true, unique: true },
+        eventId: { type: String, required: true },
         source: { type: String, required: true },
         detectedAt: { type: Date, required: true },
+        feedType: { type: String, enum: ["hour", "day", "week", "month"], required: true },
 
         location: {
             type: { type: String, enum: ["Point"], default: "Point" },
@@ -15,7 +16,7 @@ const EarthquakeSchema = new Schema(
 
         magnitude: {
             value: { type: Number, required: true },
-            scale: { type: String, enum: ["Mw", "ML", "Ms", "Mb"], default: "Mw" },
+            scale: { type: String, enum: ["Mw", "ML", "Ms", "Mb"], lowercase: true, default: "Mw" },
         },
 
         reviewed: { type: Boolean, default: false },

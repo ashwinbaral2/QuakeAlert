@@ -2,6 +2,7 @@
 // dotenv.config()
 
 import express from "express";
+import "./cronjob/earthquake.js"
 const app = express();
 const port = 8080;
 
