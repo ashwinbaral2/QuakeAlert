@@ -21,32 +21,35 @@ const FEEDS = [
 	},
 ];
 export async function syncEarthquakes() {
+	console.log("[CRON] syncEarthquakes started");
+	let totalSaved = 0;
 	for (const { url: feedUrl, type: feedType } of FEEDS) {
-		const response = await axios.get(feedUrl);
-		// Log the count of earthquakes and the length of features for debugging
-		console.log("USGS count:", response.data.metadata.count);
-		console.log("Features length:", response.data.features.length);
-		for (const feature of response.data.features) {
+		try {
+			const response = await axios.get(feedUrl);
+			console.log(`[CRON] ${feedType} feed - USGS count: ${response.data.metadata.count}`);
+			for (const feature of response.data.features) {
 			const transformed = transformUSGS(feature, feedType);
 			try{
-				await Earthquake.updateOne(
-					{ eventId: transformed.eventId, feedType: transformed.feedType },
-					{ $set: transformed },
-					{
-						upsert: true,
-						runValidators: true,
-					},
-				);
-			}catch(e){
-				console.error("Error transforming feature:", e, "Feature:", feature);
-				continue;
+					const result = await Earthquake.updateOne(
+						{ eventId: transformed.eventId, feedType: transformed.feedType },
+						{ $set: transformed },
+						{
+							upsert: true,
+							runValidators: true,
+						},
+					);
+					if (result.upsertedId) totalSaved++;
+				}catch(e){
+					console.error(`[CRON] Error on ${feedType}:`, e.message);
+					continue;
+				}
+				
 			}
-			
+		} catch (error) {
+			console.error(`[CRON] API Error fetching ${feedType}:`, error.message);
 		}
 	}
-}
-
-function transformUSGS(feature, feedType) {
+	console.log(`[CRON] syncEarthquakes completed - ${totalSaved} new records saved`);
 	return {
 		eventId: feature.id,
 		source: feature.properties.net,
