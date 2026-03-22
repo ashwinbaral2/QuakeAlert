@@ -16,7 +16,7 @@ const EarthquakeSchema = new Schema(
 
         magnitude: {
             value: { type: Number, required: true },
-            scale: { type: String, enum: ["Mw", "ML", "Ms", "Mb"], lowercase: true, default: "Mw" },
+            scale: { type: String, enum: ["mw", "ml", "ms", "mb"], lowercase: true, default: "mw" },
         },
 
         reviewed: { type: Boolean, default: false },

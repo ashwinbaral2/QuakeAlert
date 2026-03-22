@@ -5,11 +5,11 @@ import { syncEarthquakes } from "../services/earthquake.js";
 
 let isRunning = false;
 
-console.log("[INIT] Earthquake cron job initialized - scheduled for every hour");
+console.log("[INIT] Earthquake cron job initialized ");
 
 cron.schedule("0 * * * *", async () => {
   if (isRunning) {
-    console.log("⚠️ Previous job still running, skipping...");
+    console.log(" Previous job still running, skipping...");
     return;
   }
 

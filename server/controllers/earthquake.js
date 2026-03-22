@@ -62,9 +62,10 @@ const getEarthquakes = async (req, res) => {
     const skip = (pageNum - 1) * limitNum;
 
     const earthquakes = await Earthquake.find(query)
-      .sort({ detectedAt: -1 })
+      .sort({ updatedAt: -1, detectedAt: -1 })
       .skip(skip)
-      .limit(limitNum);
+      .limit(limitNum)
+      .lean();
 
     const total = await Earthquake.countDocuments(query);
 

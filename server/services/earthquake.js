@@ -28,28 +28,32 @@ export async function syncEarthquakes() {
 			const response = await axios.get(feedUrl);
 			console.log(`[CRON] ${feedType} feed - USGS count: ${response.data.metadata.count}`);
 			for (const feature of response.data.features) {
-			const transformed = transformUSGS(feature, feedType);
-			try{
+				const transformed = transformUSGS(feature, feedType);
+				try {
 					const result = await Earthquake.updateOne(
-						{ eventId: transformed.eventId, feedType: transformed.feedType },
+						{ eventId: transformed.eventId },
 						{ $set: transformed },
-						{
-							upsert: true,
-							runValidators: true,
-						},
+						{ upsert: true, runValidators: true },
 					);
-					if (result.upsertedId) totalSaved++;
-				}catch(e){
+					if (result.upsertedId) {
+						totalSaved++;
+						console.log(`[DB-INSERT] NEW: ${transformed.eventId} | upsertedId: ${result.upsertedId}`);
+					} else if (result.modifiedCount > 0) {
+						console.log(`[DB-UPDATE] UPDATED: ${transformed.eventId} | modifiedCount: ${result.modifiedCount}`);
+					}
+				} catch (e) {
 					console.error(`[CRON] Error on ${feedType}:`, e.message);
 					continue;
 				}
-				
 			}
 		} catch (error) {
 			console.error(`[CRON] API Error fetching ${feedType}:`, error.message);
 		}
 	}
 	console.log(`[CRON] syncEarthquakes completed - ${totalSaved} new records saved`);
+}
+
+function transformUSGS(feature, feedType) {
 	return {
 		eventId: feature.id,
 		source: feature.properties.net,
@@ -71,8 +75,8 @@ export async function syncEarthquakes() {
 }
 
 function normalizeScale(scale) {
-	if (!scale) return "Mw";
-	const upper = scale.toUpperCase();
-	if (["MW", "ML", "MS", "MB"].includes(upper)) return upper;
-	return "Mw";
+	if (!scale) return "mw";
+	const lower = scale.toLowerCase();
+	if (["mw", "ml", "ms", "mb"].includes(lower)) return lower;
+	return "mw";
 }
