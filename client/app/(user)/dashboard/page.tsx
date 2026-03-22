@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { DashBoardSidebar } from "@/components/dashboard-sidebar";
 
-const EarthquakeMap = dynamic(() => import("@/components/maps"), {
+const EarthquakeMap = dynamic(() => import("@/components/EarthquakeMaps"), {
 	ssr: false,
 });
 
