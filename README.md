@@ -34,19 +34,19 @@ QuakeAlert is a web app that provides real-time earthquake tracking with interac
 ## 🚀 Features (v0.1.0)
 
 ### 1. Real-Time Earthquake Feed
-- Fetches **live earthquake data** from USGS or other seismic APIs.
+- [x] Implemented scheduled background jobs using cron to periodically sync real-time earthquake data from external APIs into MongoDB.
 - Displays **magnitude, epicenter coordinates, depth, and time**.
-- Shows earthquakes in a **list or card view**.
+- Shows earthquakes in a **list**.
 
 ### 2. Interactive Map Visualization
-- Uses **Leaflet + OpenStreetMap** for mapping.
-- Plots earthquake markers using **circle-dot icons**.
+- [x] Uses **Leaflet + OpenStreetMap** for mapping.
+- [x] Plots earthquake markers using **circle-dot icons**.
 - Marker **size and color scale with magnitude**.
 - Epicenters are easy to identify visually.
 
 ### 3. Floating “Report Earthquake” Button
-- **Sticky button** always visible on the page.
-- Opens a **modal form** for users to submit:
+- [x] **Sticky button** always visible on the page.
+- [x] Opens a **modal form** for users to submit:
   - Location
   - Magnitude (optional)
   - Description of what they felt
@@ -74,7 +74,7 @@ QuakeAlert is a web app that provides real-time earthquake tracking with interac
 
 ---
 
-## ❌ Features Reserved for Future Versions
+##  Features Reserved for Future Versions
 - AI-based aftershock prediction
 - Customizable push notifications
 - Heatmaps or tectonic plate overlays
@@ -84,17 +84,18 @@ QuakeAlert is a web app that provides real-time earthquake tracking with interac
 ---
 ## Tech Stack
 
-* Node.js + Express (backend)
+* Node.js + Express + Node-Cron (backend)
 * MongoDB (database)
 * React + TypeScript (frontend)
 * Leaflet.js / Mapbox (map visualization)
+
 
 ## Installation & Setup
 
 ```bash
 # Clone the repo
 git clone https://github.com/yourusername/QuakeAlert.git
-cd QuakeAlert
+cd QuakeAlert/client
 
 # Install dependencies
 npm install
