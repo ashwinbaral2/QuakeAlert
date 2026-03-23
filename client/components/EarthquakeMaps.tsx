@@ -77,7 +77,6 @@ export default function EarthquakeMap() {
 	const [locations, setLocations] = useState<Record<string, string>>({});
 
 	const ktm: LatLngExpression = [27.72, 85.32];
-	const GEOAPIFY_KEY = "711132a81b114d0a84a81278d122f929";
 
 	// Reverse geocode
 	async function getLocationName(lat: number, lon: number) {
@@ -87,7 +86,7 @@ export default function EarthquakeMap() {
 
 		try {
 			const res = await fetch(
-				`https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lon}&apiKey=${GEOAPIFY_KEY}`
+				`https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lon}&apiKey=711132a81b114d0a84a81278d122f929`
 			);
 			const data = await res.json();
 
@@ -137,12 +136,12 @@ export default function EarthquakeMap() {
 	const userIcon = UserIcon();
 
 	return (
-		<div className="w-full h-screen mt-5 absolute top-0 left-0">
+		<div className="w-full h-full">
 			<MapContainer
 				center={ktm}
 				zoom={5}
 				scrollWheelZoom={true}
-				style={{ height: "80%", width: "80%" }}
+				style={{ height: "100%", width: "100%" }}
 			>
 				<TileLayer url="https://api.maptiler.com/maps/streets-v4/{z}/{x}/{y}.png?key=mlULvqRUGxA5YTVzhzdS" />
 

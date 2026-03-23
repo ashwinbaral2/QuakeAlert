@@ -1,6 +1,5 @@
 "use client";
 
-import Header from "@/components/site-header";
 import ReportButton from "@/components/report-button";
 import { Button } from "@/components/ui/button";
 import { Activity, ArrowDown } from "lucide-react";
@@ -23,7 +22,6 @@ const magColor = (m: number) =>
 export default function HomePage() {
   return (
     <main className="min-h-screen flex flex-col ">
-      <Header />
 
       {/* HERO */}
       <section className="px-6 py-24 md:py-32 max-w-3xl mx-auto text-center">

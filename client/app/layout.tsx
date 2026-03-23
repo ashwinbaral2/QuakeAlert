@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "../styles/globals.css";
 import "leaflet/dist/leaflet.css";
+import Header from "@/components/site-header";
 
 export const metadata: Metadata = {
 	title: "QuakeAlert - Real-time Earthquake Alerts and Information",
@@ -12,6 +13,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <body>
       
         <main className="flex-1">
+          <Header/>
           {children}
         </main>
       </body>
