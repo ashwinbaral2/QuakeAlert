@@ -6,6 +6,8 @@ import L from "leaflet";
 import { getEarthquakes } from "@/lib/api/earthquake";
 import { useEffect, useState } from "react";
 
+// ---------------- ICONS ----------------
+
 // Quake Icon
 function QuakeIcon(mag: number) {
 	const size = 10 + mag * 5;
@@ -52,6 +54,8 @@ function UserIcon() {
 	});
 }
 
+// ---------------- MAP UTILS ----------------
+
 // Fly to user
 function FlyToUser({ location }: { location: LatLngExpression | null }) {
 	const map = useMap();
@@ -65,25 +69,54 @@ function FlyToUser({ location }: { location: LatLngExpression | null }) {
 	return null;
 }
 
+// ---------------- MAIN ----------------
+
 export default function EarthquakeMap() {
 	const [quakes, setQuakes] = useState<any[]>([]);
 	const [userLocation, setUserLocation] = useState<LatLngExpression | null>(null);
+	const [locations, setLocations] = useState<Record<string, string>>({});
 
 	const ktm: LatLngExpression = [27.72, 85.32];
+	const GEOAPIFY_KEY = "711132a81b114d0a84a81278d122f929";
+
+	// Reverse geocode
+	async function getLocationName(lat: number, lon: number) {
+		const key = `${lat},${lon}`;
+
+		if (locations[key]) return;
+
+		try {
+			const res = await fetch(
+				`https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lon}&apiKey=${GEOAPIFY_KEY}`
+			);
+			const data = await res.json();
+
+			const name =
+				data?.features?.[0]?.properties?.formatted || "Unknown location";
+
+			setLocations((prev) => ({
+				...prev,
+				[key]: name,
+			}));
+		} catch (err) {
+			console.error("Geoapify error:", err);
+		}
+	}
 
 	useEffect(() => {
 		async function fetchData() {
 			const data = await getEarthquakes("day");
 			setQuakes(data.data);
 
-			console.log("API RESPONSE:", data);
+			// fetch location names
+			data.data.forEach((q: any) => {
+				const [lon, lat] = q.location.coordinates;
+				getLocationName(lat, lon);
+			});
 		}
 
 		function fetchUserLocation() {
-			if (!navigator.geolocation) {
-				console.error("Geolocation not supported");
-				return;
-			}
+			if (!navigator.geolocation) return;
 
 			navigator.geolocation.getCurrentPosition(
 				(pos) => {
@@ -91,13 +124,9 @@ export default function EarthquakeMap() {
 						pos.coords.latitude,
 						pos.coords.longitude,
 					];
-
-					console.log("User Location:", location);
-					setUserLocation(location); // FIXED
+					setUserLocation(location);
 				},
-				(err) => {
-					console.error("Error fetching user location:", err);
-				}
+				(err) => console.error(err)
 			);
 		}
 
@@ -117,7 +146,6 @@ export default function EarthquakeMap() {
 			>
 				<TileLayer url="https://api.maptiler.com/maps/streets-v4/{z}/{x}/{y}.png?key=mlULvqRUGxA5YTVzhzdS" />
 
-				{/* Move map to user */}
 				<FlyToUser location={userLocation} />
 
 				{/* User Marker */}
@@ -138,6 +166,9 @@ export default function EarthquakeMap() {
 					if (mag >= 6) color = "rgba(239, 68, 68, 0.7)";
 					if (mag >= 7) color = "rgba(185, 28, 28, 0.7)";
 
+					const key = `${coords[1]},${coords[0]}`;
+					const locationName = locations[key] || "Loading location...";
+
 					return (
 						<Marker
 							key={q.eventId}
@@ -145,11 +176,9 @@ export default function EarthquakeMap() {
 							icon={QuakeIcon(mag)}
 						>
 							<Popup>
-								<div>
-									<div className="flex items-center justify-between mb-2">
-										<span className="text-[12px] text-muted-foreground">
-											Time: {new Date(q.detectedAt).toLocaleTimeString()}
-										</span>
+								<div className="bg-white">
+									<div className="text-[11px] font-bold text-muted-foreground mb-1">
+										{locationName}
 									</div>
 
 									<div className="flex items-end gap-1">
@@ -165,7 +194,13 @@ export default function EarthquakeMap() {
 									</div>
 
 									<div className="mt-2 text-[11px] text-muted-foreground">
-										{new Date(q.detectedAt).toLocaleDateString()}
+										Detected on : {new Date(q.detectedAt).toLocaleDateString()}
+									</div>
+									<div className="flex items-center justify-between mb-2">
+										<span className="text-[12px] text-muted-foreground">
+											Time:{" "}
+											{new Date(q.detectedAt).toLocaleTimeString()}
+										</span>
 									</div>
 								</div>
 							</Popup>
