@@ -17,6 +17,36 @@ function getMagnitudeColor(mag: number) {
 	return color;
 }
 
+// Reverse geocode function
+async function getLocationName(
+	lat: number,
+	lon: number,
+	setLocations: React.Dispatch<React.SetStateAction<Record<string, string>>>
+) {
+	const key = `${lat},${lon}`;
+
+	try {
+		const res = await fetch(
+			`https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lon}&apiKey=711132a81b114d0a84a81278d122f929`
+		);
+		const data = await res.json();
+
+		const name =
+			data?.features?.[0]?.properties?.formatted || "Unknown location";
+
+		setLocations((prev) => ({
+			...prev,
+			[key]: name,
+		}));
+	} catch (err) {
+		console.error("Geoapify error:", err);
+		setLocations((prev) => ({
+			...prev,
+			[key]: "Location unavailable",
+		}));
+	}
+}
+
 // Stats Card Component
 function StatsCard({ title, value }: { title: string; value: string }) {
 	return (
@@ -46,14 +76,17 @@ function MagnitudeBadge({ mag }: { mag: number }) {
 function EventItem({
 	quake,
 	isStrongest,
+	locations,
 }: {
 	quake: any;
 	isStrongest: boolean;
+	locations: Record<string, string>;
 }) {
 	const [lon, lat] = quake.location.coordinates;
 	const mag = quake.magnitude.value;
 	const time = new Date(quake.detectedAt);
-	const location = `Lat: ${lat.toFixed(2)}, Lon: ${lon.toFixed(2)}`;
+	const key = `${lat},${lon}`;
+	const location = locations[key] || "Loading location...";
 
 	return (
 		<div
@@ -76,6 +109,7 @@ function EventItem({
 
 export default function MapsPage() {
 	const [quakes, setQuakes] = useState<any[]>([]);
+	const [locations, setLocations] = useState<Record<string, string>>({});
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
@@ -83,6 +117,12 @@ export default function MapsPage() {
 			try {
 				const data = await getEarthquakes("day");
 				setQuakes(data.data);
+
+				// fetch location names
+				data.data.forEach((q: any) => {
+					const [lon, lat] = q.location.coordinates;
+					getLocationName(lat, lon, setLocations);
+				});
 			} catch (error) {
 				console.error("Failed to fetch earthquakes:", error);
 			} finally {
@@ -154,6 +194,7 @@ export default function MapsPage() {
 									key={quake.eventId}
 									quake={quake}
 									isStrongest={quake === strongestQuake}
+									locations={locations}
 								/>
 							))
 						)}
