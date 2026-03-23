@@ -20,12 +20,11 @@ export default function ReportButton() {
       {/* Floating button */}
       <DialogTrigger asChild>
         {/* Floating emergency button: sits above main content */}
-        <Button
-          className="fixed bottom-20 right-6 z-20 bg-slate-200 hover:bg-red-700 w-fit h-fit text-red-700 hover:text-gray-100 p-5 shadow-2xl rounded-full"
-          size="icon"
-        >
-        Report an Earthquake <SquareActivity className="ml-2 h-4 w-4" />
-        </Button>
+        
+        <Button size="lg" className="fixed bottom-20 right-6 z-20 bg-red-700 text-gray-100 p-6  hover:bg-red-800 shadow-2xl rounded-2xl ">
+					Report Earthquake
+					<ActivityIcon className="ml-2 h-4 w-4" />
+				</Button>
       </DialogTrigger>
 
       {/* Modal / Form */}

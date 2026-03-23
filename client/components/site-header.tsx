@@ -3,8 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Menu, Sidebar } from "lucide-react";
-import { SidebarTrigger } from "./ui/sidebar";
+import {HeartHandshakeIcon, Menu} from "lucide-react";
 
 export default function Header() {
 	const navLinkStyle =
@@ -34,18 +33,8 @@ export default function Header() {
 						aria-label="Primary navigation"
 						className="hidden sm:flex items-center gap-6"
 					>
-						<Link href="/dashboard" className={navLinkStyle}>
-							Dashboard
-              <span className="absolute left-0 -bottom-0.5 h-[1.5px] w-0 bg-red-700 transition-all duration-300 group-hover:w-full" />
-						</Link>
-
-						<Link href="/live-map" className={navLinkStyle}>
-							Live Map
-              <span className="absolute left-0 -bottom-0.5 h-[1.5px] w-0 bg-red-700 transition-all duration-300 group-hover:w-full" />
-						</Link>
-
-						<Link href="/latest-quake" className={navLinkStyle}>
-							Latest Quake 
+						<Link href="/" className={navLinkStyle}>
+							Home 
               <span className="absolute left-0 -bottom-0.5 h-[1.5px] w-0 bg-red-700 transition-all duration-300 group-hover:w-full" />
 						</Link>
 
@@ -53,11 +42,16 @@ export default function Header() {
 							Quake Feed
               <span className="absolute left-0 -bottom-0.5 h-[1.5px] w-0 bg-red-700 transition-all duration-300 group-hover:w-full" />
 						</Link>
-						<Button variant="ghost" size="sm" className="ml-2">
-							<Menu className=" bg-white text-red-700  hover:bg-red-700 hover:text-white rounded-2xl h-4 w-4" >
-							</Menu>
 
-						</Button>
+						<Link href="/about" className={navLinkStyle}>
+							About Us 
+              <span className="absolute left-0 -bottom-0.5 h-[1.5px] w-0 bg-red-700 transition-all duration-300 group-hover:w-full" />
+						</Link>
+
+						 <Button size="lg" className="bg-red-600 hover:bg-red-700 text-white">
+            Donate
+            <HeartHandshakeIcon className="ml-2 h-4 w-4" />
+          </Button>
 					</nav>
 					
 				</div>
