@@ -12,6 +12,8 @@ A USGS-inspired real-time earthquake monitoring platform with live maps, event d
 
 QuakeAlert is a web app that provides real-time earthquake tracking with interactive maps, live event feeds, and detailed seismic data. Users can view recent earthquakes, get event details, and track seismic activity globally.
 
+---
+
 ## Features
 
 * **Real-time earthquake data feed:** Continuously fetches seismic events from public APIs (like USGS) or internal data sources.
@@ -22,27 +24,28 @@ QuakeAlert is a web app that provides real-time earthquake tracking with interac
 * **Search and filter:** Users can filter events by magnitude, date, or location.
 * **Historical data access:** View past seismic events for analysis and trend monitoring.
 
+---
+
 ## Workflow & App Functionality
 
-1. **Data Ingestion:** Backend (Node.js + Express) fetches earthquake data from external APIs or sensors, normalizes it, and stores it in MongoDB.
-2. **API Layer:** Provides endpoints for frontend and external clients to retrieve real-time and historical earthquake information.
-3. **Frontend Display:** React + TypeScript app fetches data from the API and displays it on an interactive map using Leaflet.js / Mapbox.
-4. **User Interaction:** Users can click map markers to view detailed event information, filter earthquakes by magnitude or date, and subscribe to alerts.
+1. [x] **Data Ingestion:** Backend (Node.js + Express) fetches earthquake data from external APIs or sensors, normalizes it, and stores it in MongoDB.
+2. [x] **API Layer:** Provides endpoints for frontend and external clients to retrieve real-time and historical earthquake information.
+3. [x] **Frontend Display:** React + TypeScript app fetches data from the API and displays it on an interactive map using Leaflet.js / Mapbox.
+4. [x] **User Interaction:** Users can click map markers to view detailed event information, filter earthquakes by magnitude or date.
 5. **Alerts & Notifications:** System can trigger notifications for significant events, sending alerts to subscribed users or systems.
-6. **Data Updates:** The backend regularly polls data sources to keep the dashboard up to date.
+6. [x] **Data Updates:** The backend regularly polls data sources to keep the dashboard up to date.
 
 ## 🚀 Features (v0.1.0)
 
 ### 1. Real-Time Earthquake Feed
 - [x] Implemented scheduled background jobs using cron to periodically sync real-time earthquake data from external APIs into MongoDB.
-- Displays **magnitude, epicenter coordinates, depth, and time**.
-- Shows earthquakes in a **list**.
+-[x] Displays **magnitude, epicenter coordinates, depth, and time**.
+-[x] Shows earthquakes in a **list**.
 
 ### 2. Interactive Map Visualization
 - [x] Uses **Leaflet + OpenStreetMap** for mapping.
 - [x] Plots earthquake markers using **circle-dot icons**.
-- Marker **size and color scale with magnitude**.
-- Epicenters are easy to identify visually.
+- [x] Marker **size and color scale with magnitude**.
 
 ### 3. Floating “Report Earthquake” Button
 - [x] **Sticky button** always visible on the page.
@@ -58,12 +61,11 @@ QuakeAlert is a web app that provides real-time earthquake tracking with interac
 
 ### 5. Basic Responsive UI
 - Works on **desktop and mobile**.
-- Clean and minimal **cards for earthquake details**.
-- Floating button remains accessible on all screen sizes.
+- [x] Clean and minimal **cards for earthquake details**.
+- [x] Floating button remains accessible on all screen sizes.
 
 ### 6. Basic Filtering & Sorting
-- Sort earthquakes by **magnitude** or **time**.
-- Optional filtering by **region** using coordinates.
+- [x] Sort earthquakes by **magnitude** or **time**.
 
 ---
 
@@ -88,13 +90,14 @@ QuakeAlert is a web app that provides real-time earthquake tracking with interac
 * MongoDB (database)
 * React + TypeScript (frontend)
 * Leaflet.js / Mapbox (map visualization)
+* Node-Cron (scheduled background jobs for periodic data fetching and updates)
 
 
 ## Installation & Setup
 
 ```bash
 # Clone the repo
-git clone https://github.com/yourusername/QuakeAlert.git
+git clone https://github.com/ashwinbaral2/QuakeAlert.git
 cd QuakeAlert/client
 
 # Install dependencies
